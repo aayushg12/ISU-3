@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Tools</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            padding: 20px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #28A745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        #navButtons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        #navButtons button {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Financial Tools</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Homepage -->
+        <div class="card" id="homepage">
+            <h2>Welcome to Financial Tools</h2>
+            <p>This application provides various financial tools to help you manage your finances effectively.</p>
+            <div id="navButtons">
+                <button onclick="showSection('budget')">Budget Management</button>
+                <button onclick="showSection('interest')">Interest Calculator</button>
+                <button onclick="showSection('currency')">Currency Converter</button>
+                <button onclick="showSection('appreciation')">Appreciation/Depreciation</button>
+                <button onclick="showSection('stock')">Stock Tracker</button>
+            </div>
+        </div>
+
+        <!-- Budget Management -->
+        <div class="card" id="budget" style="display:none;">
+            <h2>Budget Management</h2>
+            <input type="number" id="totalBudget" placeholder="Total Yearly Budget" required>
+            <input type="text" id="expenseName" placeholder="Expense Name" required>
+            <input type="number" id="expenseCost" placeholder="Expense Cost" required>
+            <button onclick="addExpense()">Add Expense</button>
+            <button onclick="calculateBudget()">Calculate Remaining Budget</button>
+            <p id="budgetStatus"></p>
+            <div id="expenseList">
+                <h3>Expense List</h3>
+                <ul id="expenses"></ul>
+                <p id="extraExpenses"></p>
+            </div>
+            <button onclick="showSection('homepage')">Back to Home</button>
+        </div>
+
+        <!-- Interest Calculator -->
+        <div class="card" id="interest" style="display:none;">
+            <h2>Interest Calculator</h2>
+            <select id="interestType">
+                <option value="simple">Simple</option>
+                <option value="compound">Compound</option>
+            </select>
+            <input type="number" id="principal" placeholder="Principal Amount ($)" required>
+            <input type="number" id="rate" placeholder="Interest Rate (%)" required>
+            <select id="interestFrequency">
+                <option value="annually">Annually</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="monthly">Monthly</option>
+            </select>
+            <input type="number" id="duration" placeholder="Duration (years)" required>
+            <button onclick="calculateInterest()">Calculate</button>
+            <p id="interestResult"></p>
+            <button onclick="showSection('homepage')">Back to Home</button>
+        </div>
+
+        <!-- Currency Converter -->
+        <div class="card" id="currency" style="display:none;">
+            <h2>Currency Converter</h2>
+            <input type="number" id="amountToConvert" placeholder="Total Amount" required>
+            <select id="fromCurrency">
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="CHF">CHF - Swiss Franc</option>
+                <option value="CNY">CNY - Chinese Yuan</option>
+                <option value="SEK">SEK - Swedish Krona</option>
+                <option value="NZD">NZD - New Zealand Dollar</option>
+                <option value="MXN">MXN - Mexican Peso</option>
+                <option value="SGD">SGD - Singapore Dollar</option>
+                <option value="HKD">HKD - Hong Kong Dollar</option>
+                <option value="NOK">NOK - Norwegian Krone</option>
+                <option value="KRW">KRW - South Korean Won</option>
+                <option value="TRY">TRY - Turkish Lira</option>
+                <option value="RUB">RUB - Russian Ruble</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="BRL">BRL - Brazilian Real</option>
+                <option value="ZAR">ZAR - South African Rand</option>
+                <option value="TWD">TWD - New Taiwan Dollar</option>
+                <option value="AED">AED - United Arab Emirates Dirham</option>
+            </select>
+            <select id="toCurrency">
+                <option value="EUR">EUR - Euro</option>
+                <option value="USD">USD - US Dollar</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="CHF">CHF - Swiss Franc</option>
+                <option value="CNY">CNY - Chinese Yuan</option>
+                <option value="SEK">SEK - Swedish Krona</option>
+                <option value="NZD">NZD - New Zealand Dollar</option>
+                <option value="MXN">MXN - Mexican Peso</option>
+                <option value="SGD">SGD - Singapore Dollar</option>
+                <option value="HKD">HKD - Hong Kong Dollar</option>
+                <option value="NOK">NOK - Norwegian Krone</option>
+                <option value="KRW">KRW - South Korean Won</option>
+                <option value="TRY">TRY - Turkish Lira</option>
+                <option value="RUB">RUB - Russian Ruble</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="BRL">BRL - Brazilian Real</option>
+                <option value="ZAR">ZAR - South African Rand</option>
+                <option value="TWD">TWD - New Taiwan Dollar</option>
+                <option value="AED">AED - United Arab Emirates Dirham</option>
+            </select>
+            <button onclick="convertCurrency()">Convert</button>
+            <p id="conversionResult"></p>
+            <button onclick="showSection('homepage')">Back to Home</button>
+        </div>
+
+        <!-- Appreciation and Depreciation Calculator -->
+        <div class="card" id="appreciation" style="display:none;">
+            <h2>Appreciation/Depreciation Calculator</h2>
+            <input type="number" id="initialValue" placeholder="Initial Value ($)" required>
+            <input type="number" id="finalValue" placeholder="Final Value ($)" required>
+            <button onclick="calculateAppreciationDepreciation()">Calculate</button>
+            <p id="appreciationDepreciationResult"></p>
+            <button onclick="showSection('homepage')">Back to Home</button>
+        </div>
+
+        <!-- Stock Tracker -->
+        <div class="card" id="stock" style="display:none;">
+            <h2>Stock Tracker</h2>
+            <input type="text" id="stockSymbol" placeholder="Enter Stock Symbol (e.g., GOOGL)" required>
+            <button onclick="fetchStockData()">Get Stock Data</button>
+            <div id="stockInfo"></div>
+            <button onclick="suggestBestStock()">Get Best Stock Suggestion</button>
+            <p id="bestStockSuggestion"></p>
+            <button onclick="showSection('homepage')">Back to Home</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Financial Tools</p>
+    </footer>
+
+    <script>
+        // Show selected section and hide others
+        function showSection(section) {
+            const sections = ['homepage', 'budget', 'interest', 'currency', 'appreciation', 'stock'];
+            sections.forEach(sec => {
+                document.getElementById(sec).style.display = sec === section ? 'block' : 'none';
+            });
+        }
+
+        // Budget Management
+        let totalBudget = 0;
+        let totalExpenses = 0;
+
+        function addExpense() {
+            const expenseName = document.getElementById('expenseName').value;
+            const expenseCost = parseFloat(document.getElementById('expenseCost').value);
+            
+            if (expenseName && expenseCost > 0) {
+                totalExpenses += expenseCost;
+                document.getElementById('expenses').innerHTML += `<li>${expenseName}: $${expenseCost.toFixed(2)}</li>`;
+                document.getElementById('expenseName').value = '';
+                document.getElementById('expenseCost').value = '';
+            } else {
+                alert('Please enter a valid expense name and cost.');
+            }
+        }
+
+        function calculateBudget() {
+            totalBudget = parseFloat(document.getElementById('totalBudget').value);
+            const remainingBudget = totalBudget - totalExpenses;
+            const extraExpenses = remainingBudget < 0 ? 0 : remainingBudget;
+
+            document.getElementById('budgetStatus').innerText = 
+                `Remaining Budget: $${remainingBudget < 0 ? 0 : remainingBudget.toFixed(2)}`;
+            document.getElementById('extraExpenses').innerText = 
+                `Extra/Remaining Budget for the Year: $${extraExpenses.toFixed(2)}`;
+        }
+
+        // Interest Calculator
+        function calculateInterest() {
+            const principal = parseFloat(document.getElementById('principal').value);
+            const rate = parseFloat(document.getElementById('rate').value) / 100;
+            const duration = parseFloat(document.getElementById('duration').value);
+            const interestType = document.getElementById('interestType').value;
+            const interestFrequency = document.getElementById('interestFrequency').value;
+
+            let totalAmount;
+            let n;
+
+            switch (interestFrequency) {
+                case 'quarterly':
+                    n = 4;
+                    break;
+                case 'monthly':
+                    n = 12;
+                    break;
+                case 'annually':
+                default:
+                    n = 1;
+                    break;
+            }
+
+            if (interestType === 'simple') {
+                totalAmount = principal + (principal * rate * duration);
+            } else {
+                totalAmount = principal * Math.pow((1 + rate / n), n * duration);
+            }
+
+            document.getElementById('interestResult').innerText = `Total Amount: $${totalAmount.toFixed(2)}`;
+        }
+
+        // Currency Converter
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amountToConvert').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            const conversionRates = {
+                'USD': { 'EUR': 0.85, 'GBP': 0.75, 'JPY': 110, 'AUD': 1.35, 'CNY': 6.45 },
+                'EUR': { 'USD': 1.18, 'GBP': 0.88, 'JPY': 130, 'AUD': 1.58, 'CNY': 7.63 },
+                'GBP': { 'USD': 1.33, 'EUR': 1.14, 'JPY': 148, 'AUD': 1.80, 'CNY': 8.64 },
+                'JPY': { 'USD': 0.0091, 'EUR': 0.0077, 'GBP': 0.0068, 'AUD': 0.012, 'CNY': 0.045 },
+                'AUD': { 'USD': 0.74, 'EUR': 0.63, 'GBP': 0.56, 'JPY': 83, 'CNY': 4.69 },
+                'CNY': { 'USD': 0.15, 'EUR': 0.13, 'GBP': 0.12, 'JPY': 22, 'AUD': 0.21 },
+                // Add more currency pairs and rates as needed
+            };
+
+            if (fromCurrency === toCurrency) {
+                document.getElementById('conversionResult').innerText = `Converted Amount: ${amount.toFixed(2)} ${toCurrency}`;
+                return;
+            }
+
+            const convertedAmount = amount * (conversionRates[fromCurrency][toCurrency] || 1);
+            document.getElementById('conversionResult').innerText = `Converted Amount: ${convertedAmount.toFixed(2)} ${toCurrency}`;
+        }
+
+        // Appreciation and Depreciation Calculator
+        function calculateAppreciationDepreciation() {
+            const initialValue = parseFloat(document.getElementById('initialValue').value);
+            const finalValue = parseFloat(document.getElementById('finalValue').value);
+            let resultText;
+
+            if (finalValue > initialValue) {
+                const increase = finalValue - initialValue;
+                resultText = `Appreciation: The value increased by $${increase.toFixed(2)}.`;
+            } else if (finalValue < initialValue) {
+                const decrease = initialValue - finalValue;
+                resultText = `Depreciation: The value decreased by $${decrease.toFixed(2)}.`;
+            } else {
+                resultText = "No change: The value remains the same.";
+            }
+
+            document.getElementById('appreciationDepreciationResult').innerText = resultText;
+        }
+
+        // Fetch stock data
+        async function fetchStockData() {
+            const symbol = document.getElementById('stockSymbol').value.toUpperCase();
+            const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+
+            try {
+                const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`);
+                const data = await response.json();
+
+                if (data['Error Message']) {
+                    alert("Invalid stock symbol. Please try again.");
+                    return;
+                }
+
+                const timeSeries = data['Time Series (Daily)'];
+                const latestDate = Object.keys(timeSeries)[0];
+                const latestData = timeSeries[latestDate];
+
+                document.getElementById('stockInfo').innerHTML = `
+                    <h3>${symbol}</h3>
+                    <p>Today's Open: $${latestData['1. open']}</p>
+                    <p>Today's High: $${latestData['2. high']}</p>
+                    <p>Today's Low: $${latestData['3. low']}</p>
+                    <p>Today's Close: $${latestData['4. close']}</p>
+                `;
+            } catch (error) {
+                console.error("Error fetching stock data:", error);
+                alert("There was an error fetching the stock data.");
+            }
+        }
+
+        // Suggest best stock based on current news
+        async function suggestBestStock() {
+            const apiKey = 'YOUR_API_KEY'; // Replace with your Alpha Vantage API key
+            const stocks = ["BDX", "FI", "GS", "KVUE", "LRCX", "SPOT"];
+            const stockSuggestions = [];
+
+            for (const symbol of stocks) {
+                try {
+                    // Fetch company name
+                    const overviewResponse = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${apiKey}`);
+                    const overviewData = await overviewResponse.json();
+                    const companyName = overviewData['Name'];
+
+                    stockSuggestions.push({ symbol: companyName, stockSymbol: symbol });
+                } catch (error) {
+                    console.error("Error fetching company data:", error);
+                }
+            }
+
+            // Select the best suggestion (for simplicity, just take the first one)
+            const bestSuggestion = stockSuggestions[0];
+            const suggestionText = `Suggested Stock: ${bestSuggestion.symbol} (${bestSuggestion.stockSymbol})`;
+
+            document.getElementById('bestStockSuggestion').innerText = suggestionText;
+        }
+    </script>
+</body>
+</html>
